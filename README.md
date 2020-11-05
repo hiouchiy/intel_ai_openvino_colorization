@@ -99,6 +99,14 @@ docker pull openvino/model_server:latest
 docker run -d -v <モデルを格納しているフォルダへの絶対パス>:/models/colorization/1 -p 9000:9000 openvino/model_server:latest \
 --model_path /models/colorization --model_name colorization --port 9000 --log_level DEBUG --shape auto
 ```
+またはモデルファイルをクラウドストレージ（Azure／AWS／GCP）から読み込むことも可能です。Azure Blob Storageの場合は以下の通りです。事前に接続文字列を取得し、それをホストOSの環境変数としてセットください。かつモデルフォルダの下はバージョンごと（1から開始）にサブフォルダを作成し、そちらにモデルファイル一式を格納しておく必要があります。
+```Bash
+docker run --rm  -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server:latest --model_path az://コンテナ名/モデルフォルダ名 --model_name colorization --port 9000
+```
+具体的には以下の通り。
+```Bash
+docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server:latest --model_path az://ovms/colorization --model_name colorization --port 9000
+```
 #### NotebookからOpenVINO Model Serverへアクセス
 前のコンテナ（Jupyter Lab実行中）のNotebook（colorization.ipynb）に戻り、「【応用編】OpenVINO Model Serverを使う」から再開ください。
 ## License / ライセンス
