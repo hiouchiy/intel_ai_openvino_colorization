@@ -96,8 +96,7 @@ docker pull openvino/model_server:latest
 #### OpenVINO Model Serverを起動
 各パラメータの意味については[こちら](https://github.com/openvinotoolkit/model_server/blob/main/docs/docker_container.md)を参照ください。
 ```Bash
-docker run -d -v <モデルを格納しているフォルダへの絶対パス>:/models/colorization/1 -p 9000:9000 openvino/model_server:latest \
---model_path /models/colorization --model_name colorization --port 9000 --log_level DEBUG --shape auto
+docker run -d -v <モデルを格納しているフォルダへの絶対パス>:/models/colorization/1 -p 9000:9000 openvino/model_server:latest --model_path /models/colorization --model_name colorization --port 9000 --log_level DEBUG --shape auto
 ```
 またはモデルファイルをクラウドストレージ（Azure／AWS／GCP）から読み込むことも可能です。Azure Blob Storageの場合は以下の通りです。事前に接続文字列を取得し、それをホストOSの環境変数としてセットください。かつモデルフォルダの下はバージョンごと（1から開始）にサブフォルダを作成し、そちらにモデルファイル一式を格納しておく必要があります。
 ```Bash
