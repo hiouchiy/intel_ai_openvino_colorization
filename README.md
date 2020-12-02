@@ -53,7 +53,7 @@ pip install jupyterlab munkres
 #### 本レポジトリをClone
 ```Bash
 cd ~
-git clone https://github.com/hiouchiy/intel_ai_openvino_japanese_colorization.git
+git clone https://github.com/hiouchiy/intel_ai_openvino_colorization.git
 ```
 #### Jupyter Labの起動
 ```Bash
