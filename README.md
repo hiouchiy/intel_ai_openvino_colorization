@@ -35,6 +35,7 @@ https://docs.docker.jp/docker-for-mac/install.html
 ```Bash
 docker pull openvino/ubuntu18_dev
 ```
+(注意)2021年1月18日追記：2021R2より、Colorizationの事前学習済みモデルの使用が変更されています。本インストラクションはその最新モデルには対応しておりませんので、ご注意を。
 #### Dockerコンテナの起動
 コンテナはRootで起動します。また、8888番ポートをホストOSとコンテナとでバインドしておきます。
 ```Bash
