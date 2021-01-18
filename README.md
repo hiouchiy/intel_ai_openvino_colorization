@@ -31,11 +31,11 @@ https://docs.docker.jp/docker-for-windows/install.html
 ##### macOS
 https://docs.docker.jp/docker-for-mac/install.html
 #### Dockerイメージのダウンロード
-今回はDocker版のOpenVINOを使用します（2020年11月2日現在、バージョン2021R1がダウンロードされる）。OSに直接インストールされたい方は[公式ドキュメント（英語）](https://docs.openvinotoolkit.org/latest/install_directly.html)を参照ください。
+今回はDocker版のOpenVINOを使用します（バージョン2021R1がダウンロードされる）。OSに直接インストールされたい方は[公式ドキュメント（英語）](https://docs.openvinotoolkit.org/latest/install_directly.html)を参照ください。
 ```Bash
-docker pull openvino/ubuntu18_dev
+docker pull openvino/ubuntu18_dev:2021.1
 ```
-(注意)2021年1月18日追記：2021R2より、Colorizationの事前学習済みモデルの使用が変更されています。本インストラクションはその最新モデルには対応しておりませんので、ご注意を。
+(注意)2021年1月18日追記：2021R2より、Colorizationの事前学習済みモデルの使用が変更されています。本インストラクションはその最新モデルには対応しておりませんので、あくまでも旧モデルである2021R1のバージョンを使用します。ご注意を。
 #### Dockerコンテナの起動
 コンテナはRootで起動します。また、8888番ポートをホストOSとコンテナとでバインドしておきます。
 ```Bash
@@ -90,22 +90,22 @@ Jupyter Lab上で「intel_ai_openvino_colorization」フォルダーに入り、
 #### OpenVINO Model ServerのDockerイメージをダウンロード
 ホストOS上でもう一つターミナルを開き、下記コマンドを実行
 ```Bash
-docker pull openvino/model_server:latest
+docker pull openvino/model_server::2021.1
 ```
 #### OpenVINOの事前学習済みモデルをダウンロード
 ハンズオンの中で使用した日本語の手書き文字認識用の事前学習済みモデルをダウンロードして、ホストOS上の適当なフォルダに格納しておく
 #### OpenVINO Model Serverを起動
 各パラメータの意味については[こちら](https://github.com/openvinotoolkit/model_server/blob/main/docs/docker_container.md)を参照ください。
 ```Bash
-docker run -d -v <モデルを格納しているフォルダへの絶対パス>:/models/colorization/1 -p 9000:9000 openvino/model_server:latest --model_path /models/colorization --model_name colorization --port 9000 --log_level DEBUG --shape auto
+docker run -d -v <モデルを格納しているフォルダへの絶対パス>:/models/colorization/1 -p 9000:9000 openvino/model_server::2021.1 --model_path /models/colorization --model_name colorization --port 9000 --log_level DEBUG --shape auto
 ```
 またはモデルファイルをクラウドストレージ（Azure／AWS／GCP）から読み込むことも可能です。Azure Blob Storageの場合は以下の通りです。事前に接続文字列を取得し、それをホストOSの環境変数としてセットください。かつモデルフォルダの下はバージョンごと（1から開始）にサブフォルダを作成し、そちらにモデルファイル一式を格納しておく必要があります。
 ```Bash
-docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server:latest --model_path az://コンテナ名/モデルフォルダ名 --model_name colorization --port 9000
+docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server::2021.1 --model_path az://コンテナ名/モデルフォルダ名 --model_name colorization --port 9000
 ```
 具体的には以下の通り。
 ```Bash
-docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server:latest --model_path az://ovms/colorization --model_name colorization --port 9000
+docker run --rm -d -p 9000:9000 -e AZURE_STORAGE_CONNECTION_STRING="%AZURE_STORAGE_CONNECTION_STRING%" openvino/model_server::2021.1 --model_path az://ovms/colorization --model_name colorization --port 9000
 ```
 #### NotebookからOpenVINO Model Serverへアクセス
 前のコンテナ（Jupyter Lab実行中）のNotebook（colorization.ipynb）に戻り、「【応用編】OpenVINO Model Serverを使う」から再開ください。
